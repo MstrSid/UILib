@@ -6,7 +6,6 @@ $.prototype.show = function () {
 			continue;
 		}
 		this[i].style.display = '';
-		console.log(`show ${JSON.stringify(this[i])}`);
 	}
 	return this;
 };
@@ -17,7 +16,6 @@ $.prototype.hide = function () {
 			continue;
 		}
 		this[i].style.display = 'none';
-		console.log(`hide ${this[i]}`);
 	}
 	return this;
 };
@@ -29,9 +27,7 @@ $.prototype.toggle = function () {
 		}
 		if (this[i].style.display === 'none') {
 			this[i].style.display = '';
-			console.log(`toggle ${this[i]}`);
 		} else {
-			console.log(`toggle ${this[i]}`);
 			this[i].style.display = 'none';
 		}
 	}
