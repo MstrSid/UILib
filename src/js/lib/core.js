@@ -16,7 +16,6 @@ $.prototype.init = function (selector) {
 	Object.assign(this, document.querySelectorAll(selector));
 	this.length = document.querySelectorAll(selector).length;
 	return this;
-
 };
 $.prototype.init.prototype = $.prototype;
 

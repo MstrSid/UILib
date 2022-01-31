@@ -51,8 +51,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./core */ "./src/js/lib/core.js");
 /* harmony import */ var _modules_display__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./modules/display */ "./src/js/lib/modules/display.js");
 /* harmony import */ var _modules_classes__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./modules/classes */ "./src/js/lib/modules/classes.js");
-/* harmony import */ var _modules_actions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./modules/actions */ "./src/js/lib/modules/actions.js");
-/* harmony import */ var _modules_attributes__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./modules/attributes */ "./src/js/lib/modules/attributes.js");
+/* harmony import */ var _modules_handlers__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./modules/handlers */ "./src/js/lib/modules/handlers.js");
+/* harmony import */ var _modules_actions__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./modules/actions */ "./src/js/lib/modules/actions.js");
+/* harmony import */ var _modules_attributes__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./modules/attributes */ "./src/js/lib/modules/attributes.js");
+
 
 
 
@@ -72,37 +74,119 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../core */ "./src/js/lib/core.js");
 
 
-_core__WEBPACK_IMPORTED_MODULE_0__["default"].prototype.on = function (eventName, callback) {
-  if (!eventName || !callback) {
-    return this;
-  }
-
+_core__WEBPACK_IMPORTED_MODULE_0__["default"].prototype.html = function (content) {
   for (let i = 0; i < this.length; i++) {
-    this[i].addEventListener(eventName, callback);
-  }
-
-  return this;
-};
-
-_core__WEBPACK_IMPORTED_MODULE_0__["default"].prototype.off = function (eventName, callback) {
-  if (!eventName || !callback) {
-    return this;
-  }
-
-  for (let i = 0; i < this.length; i++) {
-    this[i].removeEventListener(eventName, callback);
-  }
-
-  return this;
-};
-
-_core__WEBPACK_IMPORTED_MODULE_0__["default"].prototype.click = function (handler) {
-  for (let i = 0; i < this.length; i++) {
-    if (handler) {
-      this[i].addEventListener('click', handler);
-    } else {
-      this[i].click();
+    for (let key in this[i]) {
+      if (key === 'innerHTML') {
+        if (content) {
+          this[i][key] = content;
+        } else {
+          return this[i][key];
+        }
+      }
     }
+  }
+
+  return this;
+};
+
+_core__WEBPACK_IMPORTED_MODULE_0__["default"].prototype.eq = function (i) {
+  const element = this[i],
+        objLength = Object.keys(this).length;
+
+  for (let i = 0; i < objLength; i++) {
+    delete this[i];
+  }
+
+  this[0] = element;
+  this.length = 1;
+  return this;
+};
+
+_core__WEBPACK_IMPORTED_MODULE_0__["default"].prototype.index = function () {
+  const parent = this[0].parentNode,
+        childs = [...parent.children];
+
+  const findMyIndex = item => {
+    return item === this[0];
+  };
+
+  return childs.findIndex(findMyIndex);
+};
+
+_core__WEBPACK_IMPORTED_MODULE_0__["default"].prototype.find = function (selector) {
+  let numOfItems = 0,
+      counter = 0;
+  const copyObj = Object.assign({}, this);
+
+  for (let i = 0; i < copyObj.length; i++) {
+    const array = copyObj[i].querySelectorAll(selector);
+
+    if (array.length === 0) {
+      continue;
+    }
+
+    for (let j = 0; j < array.length; j++) {
+      this[counter] = array[j];
+      counter++;
+    }
+
+    numOfItems += array.length;
+  }
+
+  this.length = numOfItems;
+
+  for (; numOfItems < Object.keys(this).length; numOfItems++) {
+    delete this[numOfItems];
+  }
+
+  return this;
+};
+
+_core__WEBPACK_IMPORTED_MODULE_0__["default"].prototype.closest = function (selector) {
+  let counter = 0;
+
+  for (let i = 0; i < this.length; i++) {
+    this[i] = this[i].closest(selector);
+
+    if (this[i] === null) {
+      this[i] = '';
+    }
+
+    counter++;
+  }
+
+  for (; counter < Object.keys(this).length; counter++) {
+    delete this[counter];
+  }
+
+  return this;
+};
+
+_core__WEBPACK_IMPORTED_MODULE_0__["default"].prototype.siblings = function () {
+  let numOfItems = 0,
+      counter = 0;
+  const copyObj = Object.assign({}, this);
+
+  for (let i = 0; i < copyObj.length; i++) {
+    const array = copyObj[i].parentNode.children;
+
+    for (let j = 0; j < array.length; j++) {
+      if (copyObj[i] === array[j]) {
+        continue;
+      }
+
+      this[counter] = array[j];
+      counter++;
+    }
+
+    numOfItems += array.length - 1;
+  }
+
+  this.length = numOfItems;
+
+  for (; numOfItems < Object.keys(this).length; numOfItems++) {
+    delete this[numOfItems];
   }
 
   return this;
@@ -122,7 +206,7 @@ __webpack_require__.r(__webpack_exports__);
 
 _core__WEBPACK_IMPORTED_MODULE_0__["default"].prototype.addAttribute = function (attrName) {
   for (let i = 0; i < this.length; i++) {
-    this[i].setAttribute(attrName);
+    this[i].setAttribute(attrName, '');
   }
 
   return this;
@@ -250,6 +334,54 @@ _core__WEBPACK_IMPORTED_MODULE_0__["default"].prototype.toggle = function () {
   return this;
 };
 
+/***/ }),
+
+/***/ "./src/js/lib/modules/handlers.js":
+/*!****************************************!*\
+  !*** ./src/js/lib/modules/handlers.js ***!
+  \****************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../core */ "./src/js/lib/core.js");
+
+
+_core__WEBPACK_IMPORTED_MODULE_0__["default"].prototype.on = function (eventName, callback) {
+  if (!eventName || !callback) {
+    return this;
+  }
+
+  for (let i = 0; i < this.length; i++) {
+    this[i].addEventListener(eventName, callback);
+  }
+
+  return this;
+};
+
+_core__WEBPACK_IMPORTED_MODULE_0__["default"].prototype.off = function (eventName, callback) {
+  if (!eventName || !callback) {
+    return this;
+  }
+
+  for (let i = 0; i < this.length; i++) {
+    this[i].removeEventListener(eventName, callback);
+  }
+
+  return this;
+};
+
+_core__WEBPACK_IMPORTED_MODULE_0__["default"].prototype.click = function (handler) {
+  for (let i = 0; i < this.length; i++) {
+    if (handler) {
+      this[i].addEventListener('click', handler);
+    } else {
+      this[i].click();
+    }
+  }
+
+  return this;
+};
+
 /***/ })
 
 /******/ 	});
@@ -317,14 +449,24 @@ var __webpack_exports__ = {};
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _lib_lib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./lib/lib */ "./src/js/lib/lib.js");
 
-$('#add').on('click', function () {
-  $(this).addAttribute('disabled');
-});
-$('#toggle').on('click', function () {
-  $(this).toggleAttribute('disabled');
-});
-$('#remove').on('click', function () {
-  $(this).removeAttribute('disabled');
+
+
+document.addEventListener('DOMContentLoaded', () => {
+  $('#add').on('click', function () {
+    $('div').eq(2).toggleClass('active');
+  }); // $('#toggle').on('click', function () {
+  // 	$(this).toggleAttribute('disabled');
+  // });
+  // $('#remove').on('click', function () {
+  // 	$(this).removeAttribute('disabled');
+  // });
+  //console.log($('button').html());
+  // $('div').on('click', function () {
+  // 	console.log($(this).index());
+  // });
+  //console.log($('div').eq(2).find('.some'));
+
+  console.log($('.test').eq(0).siblings());
 });
 })();
 

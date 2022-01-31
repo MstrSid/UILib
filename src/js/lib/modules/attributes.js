@@ -2,7 +2,7 @@ import $ from "../core";
 
 $.prototype.addAttribute = function (attrName) {
 	for (let i = 0; i < this.length; i++) {
-		this[i].setAttribute(attrName);
+		this[i].setAttribute(attrName, '');
 	}
 	return this;
 };
