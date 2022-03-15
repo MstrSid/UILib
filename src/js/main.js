@@ -3,7 +3,7 @@
 import './lib/lib';
 
 document.addEventListener('DOMContentLoaded', () => {
-	$('#add').on('click', function () {
+	$('#toggle').on('click', function () {
 		$('div').eq(2).toggleClass('active');
 	});
 

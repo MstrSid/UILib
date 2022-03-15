@@ -454,7 +454,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 document.addEventListener('DOMContentLoaded', () => {
-  $('#add').on('click', function () {
+  $('#toggle').on('click', function () {
     $('div').eq(2).toggleClass('active');
   }); // $('#toggle').on('click', function () {
   // 	$(this).toggleAttribute('disabled');
