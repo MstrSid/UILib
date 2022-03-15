@@ -29,10 +29,12 @@ $.prototype.init = function (selector) {
 
   Object.assign(this, document.querySelectorAll(selector));
   this.length = document.querySelectorAll(selector).length;
-  return this;
+  return this; //return object
 };
 
-$.prototype.init.prototype = $.prototype;
+$.prototype.init.prototype = $.prototype; // set prototype of returned object from init prototype of $. 
+// Now we can use all methods from $ and chaining.
+
 window.$ = $;
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ($);
 

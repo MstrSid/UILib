@@ -7,7 +7,7 @@ $.prototype.init = function (selector) {
 		return this; // return empty object {}
 	}
 
-	if(selector.tagName){
+	if (selector.tagName) {
 		this[0] = selector;
 		this.length = 1;
 		return this;
@@ -15,9 +15,10 @@ $.prototype.init = function (selector) {
 
 	Object.assign(this, document.querySelectorAll(selector));
 	this.length = document.querySelectorAll(selector).length;
-	return this;
+	return this; //return object
 };
-$.prototype.init.prototype = $.prototype;
+$.prototype.init.prototype = $.prototype; // set prototype of returned object from init prototype of $. 
+// Now we can use all methods from $ and chaining.
 
 window.$ = $;
 
