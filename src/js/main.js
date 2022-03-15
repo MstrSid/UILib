@@ -3,24 +3,7 @@
 import './lib/lib';
 
 document.addEventListener('DOMContentLoaded', () => {
-	$('#toggle').on('click', function () {
-		$('div').eq(2).toggleClass('active');
+	$('div').click(function () {
+		$(this).fadeOut(1800);
 	});
-
-	// $('#toggle').on('click', function () {
-	// 	$(this).toggleAttribute('disabled');
-	// });
-
-	// $('#remove').on('click', function () {
-	// 	$(this).removeAttribute('disabled');
-	// });
-
-	//console.log($('button').html());
-
-	// $('div').on('click', function () {
-	// 	console.log($(this).index());
-	// });
-
-	//console.log($('div').eq(2).find('.some'));
-	console.log($('.test').eq(0).siblings());
 });
