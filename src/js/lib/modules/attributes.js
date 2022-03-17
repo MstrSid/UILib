@@ -21,3 +21,10 @@ $.prototype.toggleAttribute = function (attrName) {
 	}
 	return this;
 };
+
+$.prototype.getAttribute = function (attrName) {
+	for (let i = 0; i < this.length; i++) {
+		return this[i].getAttribute(attrName);
+	}
+	return this;
+};
