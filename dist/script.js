@@ -376,14 +376,7 @@ _core__WEBPACK_IMPORTED_MODULE_0__["default"].prototype.animateOverTime = functi
 
 _core__WEBPACK_IMPORTED_MODULE_0__["default"].prototype.fadeIn = function (duration, display, finalAction) {
   for (let i = 0; i < this.length; i++) {
-    this[i].style.display = display || "block";
-
-    const _fadeIn = complection => {
-      this[i].style.opacity = complection;
-    };
-
-    const anim = this.animateOverTime(duration, _fadeIn, finalAction);
-    requestAnimationFrame(anim);
+    _show(this[i], this, duration, display, finalAction);
   }
 
   return this;
@@ -391,19 +384,46 @@ _core__WEBPACK_IMPORTED_MODULE_0__["default"].prototype.fadeIn = function (durat
 
 _core__WEBPACK_IMPORTED_MODULE_0__["default"].prototype.fadeOut = function (duration, finalAction) {
   for (let i = 0; i < this.length; i++) {
-    const _fadeOut = complection => {
-      this[i].style.opacity = 1 - complection;
-
-      if (complection === 1) {
-        this[i].style.display = "none";
-      }
-    };
-
-    const anim = this.animateOverTime(duration, _fadeOut, finalAction);
-    requestAnimationFrame(anim);
+    _hide(this[i], this, duration, finalAction);
   }
 
   return this;
+};
+
+_core__WEBPACK_IMPORTED_MODULE_0__["default"].prototype.fadeToggle = function (duration, display, finalAction) {
+  for (let i = 0; i < this.length; i++) {
+    if (window.getComputedStyle(this[i]).display === 'none') {
+      _show(this[i], this, duration, display, finalAction);
+    } else {
+      _hide(this[i], this, duration, finalAction);
+    }
+  }
+
+  return this;
+};
+
+const _show = (item, context, duration, display, finalAction) => {
+  item.style.display = display || "block";
+
+  const _fadeIn = complection => {
+    item.style.opacity = complection;
+  };
+
+  const anim = context.animateOverTime(duration, _fadeIn, finalAction);
+  requestAnimationFrame(anim);
+};
+
+const _hide = (item, context, duration, finalAction) => {
+  const _fadeOut = complection => {
+    item.style.opacity = 1 - complection;
+
+    if (complection === 1) {
+      item.style.display = "none";
+    }
+  };
+
+  const anim = context.animateOverTime(duration, _fadeOut, finalAction);
+  requestAnimationFrame(anim);
 };
 
 /***/ }),
@@ -524,8 +544,14 @@ __webpack_require__.r(__webpack_exports__);
 
 
 document.addEventListener('DOMContentLoaded', () => {
-  $('div').click(function () {
-    $(this).fadeOut(1800);
+  $('#first').on('click', () => {
+    $('div').eq(1).fadeToggle(800);
+  });
+  $('[data-count="second"]').on('click', () => {
+    $('div').eq(2).fadeToggle(800);
+  });
+  $('button').eq(2).on('click', () => {
+    $('.w-500').fadeToggle(800);
   });
 });
 })();

@@ -1,20 +1,8 @@
-* {
-	margin: 0;
-	padding: 0;
-	box-sizing: border-box;
-}
-
-button {
-	width: 150px;
-	height: 40px;
-	background-color: lightblue;
-	text-align: center;
-	cursor: pointer;
-	border: none;
-	border-radius: 10px;
-}
+@import "./general/general.scss";
+@import "./components/ui.scss";
+@import "./helpers/classes.scss";
 
 .active {
-	color: red;
+	color: $primary;
 	font-size: 20px;
 }
