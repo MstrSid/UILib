@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
 		$('.w-500').fadeToggle(800);
 	});
 
-	$('.wrap').html(`
+	$('.wrap-dropdown').html(`
 	<div class="dropdown">
 		<button class="btn btn-primary dropdown-toggle" id="dropdownMenuButton">
 			Dropdown button
