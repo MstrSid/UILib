@@ -50,9 +50,9 @@ $.prototype.fadeToggle = function (duration, display, finalAction) {
 };
 
 const _show = (item, context, duration, display, finalAction) => {
-	item.style.display = display || "block";
 	const _fadeIn = (complection) => {
 		item.style.opacity = complection;
+		item.style.display = display || "block";
 	};
 	const anim = context.animateOverTime(duration, _fadeIn, finalAction);
 	requestAnimationFrame(anim);

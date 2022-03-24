@@ -1,0 +1,37 @@
+.tab {
+	max-width: 700px;
+	&-panel {
+		display: flex;
+		width: max-content;
+		min-height: 50px;
+		border: 1px solid rgba(0, 0, 0, 0.2);
+		border-bottom: none;
+		border-radius: 4px 4px 0 0;
+	}
+	&-item {
+		transition: all 0.3s;
+		font-size: 18px;
+		line-height: 27px;
+		padding: 10px 20px;
+		border-right: 1px solid rgba(0, 0, 0, 0.2);
+		cursor: pointer;
+		&:hover{
+			background-color: rgba(40, 218, 114, 0.308);
+		}
+		&:last-child {
+			border-right: none;
+		}
+		&__active {
+			background-color: rgba(0, 0, 0, 0.1);
+		}
+	}
+	&-content {
+		display: none;
+		padding: 20px;
+		border: 1px solid rgba(0, 0, 0, 0.2);
+		border-radius: 0 0 4px 4px;
+		&__active {
+			display: block;
+		}
+	}
+}
